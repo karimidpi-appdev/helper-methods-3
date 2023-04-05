@@ -54,8 +54,18 @@ describe "The movie details page" do
       "Expected to visit /movies/ID successfully."
   end
 
-  it "has a link to delete the movie with a DELETE request", points: 2 do
-    expect(page).to have_selector("a[href='/movies/#{ @movie.id }'][data-method='delete']", text: 'Delete Movie'),
+  it "shows the movie on a bootstrap card", points: 2 do
+    expect(page).to have_selector("div[class='card']"),
+      "Expected /movies/ID to have have a <div class='card'> element to display the movie."
+  end
+
+  it "has a Font Awesome trash can icon to delete the movie", points: 2 do
+    expect(page).to have_selector("i[class='fa-regular fa-trash-can']"),
+      "Expected /movies/ID to have a Font Awesome trash can icon on the card, with class='fa-regular fa-trash-can'."
+  end
+
+  it "deletes the movie with a DELETE request", points: 2 do
+    expect(page).to have_selector("a[href='/movies/#{@movie.id}'][data-method='delete']"),
       "Expected /movies/ID to have 'Delete Movie' link with the proper data-method='delete'."
   end
 end
