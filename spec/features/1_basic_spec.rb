@@ -113,3 +113,17 @@ describe "The movie edit page" do
       "Expected the edit movie form to have an input field of type='hidden' with name='_method' and value='patch'."
   end
 end
+
+describe "/users/sign_up" do
+  it "allows a user to sign up", points: 2 do
+    visit new_user_registration_path
+
+    fill_in "Email", with: "user@example.com"
+    fill_in "Password", with: "password"
+    fill_in "Password confirmation", with: "password"
+    click_button "Sign up"
+
+    expect(page).to have_content("Welcome! You have signed up successfully."),
+      "Expected to visit /users/sign_up, make an account, and be redirected to the homepage with a notification 'Welcome! You have signed up successfully.'."
+  end
+end
