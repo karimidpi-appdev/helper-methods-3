@@ -14,6 +14,11 @@ describe "The /movies page" do
     expect(page).to have_link('Add a new movie', href: "/movies/new"),
       "Expected /movies to have an 'Add a new movie' link to '/movies/new'."
   end
+
+  it "has a bootstrap navbar", points: 1 do
+    expect(page).to have_selector("nav[class='navbar navbar-expand-lg navbar-light bg-light']"),
+    "Expected /movies to have have a <nav class='navbar navbar-expand-lg navbar-light bg-light'> bootstrap navbar."
+  end
 end
 
 describe "The /movies/new page" do
