@@ -19,6 +19,11 @@ describe "The /movies page" do
     expect(page).to have_selector("nav[class='navbar navbar-expand-lg navbar-light bg-light']"),
     "Expected /movies to have have a <nav class='navbar navbar-expand-lg navbar-light bg-light'> bootstrap navbar."
   end
+
+  it "has padding with a bootstrap container class", points: 1 do
+    expect(page).to have_selector("div[class='container mt-3']"),
+    "Expected /movies to have have a <div class='container mt-3'> bootstrap container for padding."
+  end
 end
 
 describe "The /movies/new page" do
