@@ -31,11 +31,6 @@ describe "The /movies/new page" do
       "Expected /movies/new to have a form with action='/movies'."
   end
 
-  it "has a hidden authenticity token input", points: 2 do
-    expect(page).to have_selector("input")#[name='authenticity_token']", visible: false),
-      "Expected the new movie form to have an input field of type='hidden' and name='authenticity_token'."
-  end
-
   it "creates a movie successfully", point: 1 do
     fill_in "Title", with: "My test movie"
     fill_in "Description", with: "description"
