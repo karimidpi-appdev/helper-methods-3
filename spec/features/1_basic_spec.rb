@@ -22,11 +22,11 @@ describe "The /movies page" do
     "Expected /movies to have have a <nav class='navbar navbar-expand-lg navbar-light bg-light'> bootstrap navbar."
   end
 
-  it "has padding with a bootstrap container class", points: 1 do
+  it "has margin top spacing with a bootstrap container class", points: 1 do
     visit "/movies"
 
     expect(page).to have_selector("div[class='container mt-3']"),
-    "Expected /movies to have have a <div class='container mt-3'> bootstrap container for padding."
+    "Expected /movies to have have a <div class='container mt-3'> bootstrap container for adding margin top spacing."
   end
 end
 
