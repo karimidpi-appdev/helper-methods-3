@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "User authentication" do
-  it "Devise method `before_action :authenticate_user!` requires sign in before any action", points: 2 do
+  it "requires sign in before any action with the Devise `before_action :authenticate_user!` method", points: 2 do
     visit "/movies/new"
     current_url = page.current_path
 
