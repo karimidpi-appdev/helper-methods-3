@@ -45,7 +45,21 @@ describe "The /movies/new page" do
       "Expected /movies/new to have a form with action='/movies'."
   end
 
-  it "creates a movie successfully", point: 1 do
+  it "has a form that creates a movie record", point: 1 do
+    old_movies_count = Movie.count
+    visit "/movies/new"
+
+    fill_in "Title", with: "My test movie"
+    fill_in "Description", with: "description"
+    click_button "Create Movie"
+
+    new_movies_count = Movie.count
+    
+    expect(old_movies_count).to be < new_movies_count,
+      "Expected 'Create Movie' form on /movies/new to successfully add a Movie record to the database."
+  end
+
+  it "displays a success notice flash message after creating movie", point: 1 do
     visit "/movies/new"
 
     fill_in "Title", with: "My test movie"
@@ -53,7 +67,7 @@ describe "The /movies/new page" do
     click_button "Create Movie"
 
     expect(page).to have_content("Movie created successfully."),
-      "Expected to fill in the new movie form, click 'Create Movie', and be redirected to the movie index with a success notice"
+      "Expected to see the notice flash message 'Movie created successfully' after filling in and submitting the /movies/new form."
   end
 end
 
