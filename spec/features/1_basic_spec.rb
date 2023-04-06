@@ -1,5 +1,30 @@
 require "rails_helper"
 
+describe "User authentication" do
+  it "Devise method `before_action :authenticate_user!` requires sign in before any action", points: 2 do
+    visit "/movies/new"
+    current_url = page.current_path
+
+    expect(current_url).to eq(new_user_session_path),
+      "Expected `before_action :authenticate_user!` in `ApplicationController` to redirect guest to /users/sign_in before visiting another page."
+  end
+
+  it "allows a user to sign up", points: 2 do
+    old_users_count = User.count
+    visit new_user_registration_path
+
+    fill_in "Email", with: "user@example.com"
+    fill_in "Password", with: "password"
+    fill_in "Password confirmation", with: "password"
+    click_button "Sign up"
+
+    new_users_count = User.count
+
+    expect(old_users_count).to be < new_users_count,
+      "Expected 'Sign up' form on /users/sign_up to successfully add a User record to the database."
+  end
+end
+
 describe "The /movies page" do
   let(:user) { User.create(email: "alice@example.com", password: "password") }
 
@@ -135,19 +160,5 @@ describe "The movie edit page" do
 
     expect(page).to have_selector("input[name='_method'][value='patch']", visible: false),
       "Expected the edit movie form to have an input field of type='hidden' with name='_method' and value='patch'."
-  end
-end
-
-describe "/users/sign_up" do
-  it "allows a user to sign up", points: 2 do
-    visit new_user_registration_path
-
-    fill_in "Email", with: "user@example.com"
-    fill_in "Password", with: "password"
-    fill_in "Password confirmation", with: "password"
-    click_button "Sign up"
-
-    expect(page).to have_content("Welcome! You have signed up successfully."),
-      "Expected to visit /users/sign_up, make an account, and be redirected to the homepage with a notification 'Welcome! You have signed up successfully.'."
   end
 end
