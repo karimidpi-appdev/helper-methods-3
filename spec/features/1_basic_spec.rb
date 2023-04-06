@@ -55,7 +55,7 @@ describe "The /movies/new page" do
 
     new_movies_count = Movie.count
     
-    expect(old_movies_count).to be > new_movies_count,
+    expect(old_movies_count).to be < new_movies_count,
       "Expected 'Create Movie' form on /movies/new to successfully add a Movie record to the database."
   end
 
