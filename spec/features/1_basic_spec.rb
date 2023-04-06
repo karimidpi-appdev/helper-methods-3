@@ -15,18 +15,18 @@ describe "The /movies page" do
       "Expected /movies to have an 'Add a new movie' link to '/movies/new'."
   end
 
-  it "has a bootstrap navbar", points: 1 do
+  it "has a large, light-themed bootstrap navbar", points: 1 do
     visit "/movies"
 
     expect(page).to have_selector("nav[class='navbar navbar-expand-lg navbar-light bg-light']"),
     "Expected /movies to have have a <nav class='navbar navbar-expand-lg navbar-light bg-light'> bootstrap navbar."
   end
 
-  it "has padding with a bootstrap container class", points: 1 do
+  it "has margin top spacing with a bootstrap container class", points: 1 do
     visit "/movies"
 
     expect(page).to have_selector("div[class='container mt-3']"),
-    "Expected /movies to have have a <div class='container mt-3'> bootstrap container for padding."
+    "Expected /movies to have have a <div class='container mt-3'> bootstrap container for adding margin top spacing."
   end
 end
 
@@ -45,7 +45,21 @@ describe "The /movies/new page" do
       "Expected /movies/new to have a form with action='/movies'."
   end
 
-  it "creates a movie successfully", point: 1 do
+  it "has a form that creates a movie record", point: 1 do
+    old_movies_count = Movie.count
+    visit "/movies/new"
+
+    fill_in "Title", with: "My test movie"
+    fill_in "Description", with: "description"
+    click_button "Create Movie"
+
+    new_movies_count = Movie.count
+    
+    expect(old_movies_count).to be > new_movies_count,
+      "Expected 'Create Movie' form on /movies/new to successfully add a Movie record to the database."
+  end
+
+  it "displays a notice flash message after creating movie", point: 1 do
     visit "/movies/new"
 
     fill_in "Title", with: "My test movie"
