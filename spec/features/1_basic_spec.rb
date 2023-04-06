@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "User authentication" do
-  it "Devise method `before_action :authenticate_user!` requires sign in before any action", points: 2 do
+  it "requires sign in before any action with the Devise `before_action :authenticate_user!` method", points: 2 do
     visit "/movies/new"
     current_url = page.current_path
 
@@ -26,14 +26,8 @@ describe "User authentication" do
 end
 
 describe "The /movies page" do
-  let(:user) { User.create(email: "alice@example.com", password: "password") }
-
   before do
-    visit new_user_session_path
-
-    fill_in "Email", with: user.email
-    fill_in "Password", with: user.password
-    click_button "Log in"
+    sign_in_user if user_model_exists?
   end
 
   it "can be visited", points: 1 do
@@ -66,14 +60,8 @@ describe "The /movies page" do
 end
 
 describe "The /movies/new page" do
-  let(:user) { User.create(email: "alice@example.com", password: "password") }
-
   before do
-    visit new_user_session_path
-
-    fill_in "Email", with: user.email
-    fill_in "Password", with: user.password
-    click_button "Log in"
+    sign_in_user if user_model_exists?
   end
 
   it "can be visited", points: 1 do
@@ -117,17 +105,11 @@ describe "The /movies/new page" do
 end
 
 describe "The movie details page" do
-  let(:user) { User.create(email: "alice@example.com", password: "password") }
+  let(:movie) { Movie.create(title: "My title", description: "My description") }
 
   before do
-    visit new_user_session_path
-
-    fill_in "Email", with: user.email
-    fill_in "Password", with: user.password
-    click_button "Log in"
+    sign_in_user if user_model_exists?
   end
-
-  let(:movie) { Movie.create(title: "My title", description: "My description") }
 
   it "can be visited", points: 1 do
     visit "/movies/#{movie.id}"
@@ -160,14 +142,9 @@ end
 
 describe "The movie edit page" do
   let(:movie) { Movie.create(title: "My title", description: "My description") }
-  let(:user) { User.create(email: "alice@example.com", password: "password") }
 
   before do
-    visit new_user_session_path
-
-    fill_in "Email", with: user.email
-    fill_in "Password", with: user.password
-    click_button "Log in"
+    sign_in_user if user_model_exists?
   end
 
   it "can be visited", points: 1 do
@@ -190,4 +167,18 @@ describe "The movie edit page" do
     expect(page).to have_selector("input[name='_method'][value='patch']", visible: false),
       "Expected the edit movie form to have an input field of type='hidden' with name='_method' and value='patch'."
   end
+end
+
+
+def sign_in_user
+  user = User.create(email: "alice@example.com", password: "password")
+  visit new_user_session_path
+
+  fill_in "Email", with: user.email
+  fill_in "Password", with: user.password
+  click_button "Log in"
+end
+
+def user_model_exists?
+  Object.const_defined?("User")
 end
