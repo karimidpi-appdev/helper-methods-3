@@ -59,7 +59,7 @@ describe "The /movies/new page" do
       "Expected 'Create Movie' form on /movies/new to successfully add a Movie record to the database."
   end
 
-  it "displays a notice flash message after creating movie", point: 1 do
+  it "displays a success notice flash message after creating movie", point: 1 do
     visit "/movies/new"
 
     fill_in "Title", with: "My test movie"
@@ -67,7 +67,7 @@ describe "The /movies/new page" do
     click_button "Create Movie"
 
     expect(page).to have_content("Movie created successfully."),
-      "Expected to fill in the new movie form, click 'Create Movie', and be redirected to the movie index with a success notice"
+      "Expected to see the notice flash message 'Movie created successfully' after filling in and submitting the /movies/new form."
   end
 end
 
