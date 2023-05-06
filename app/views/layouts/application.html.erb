@@ -50,18 +50,21 @@
       </div>
     </nav>
 
-    <% if notice.present? %>
-      <div class="alert alert-success" role="alert">
-        <%= notice %>
-      </div>
-    <% end %>
+    <div class="container mt-4">
 
-    <% if alert.present? %>
-      <div class="alert alert-danger" role="alert">
-        <%= alert %>
-      </div>
-    <% end %>
+      <% if notice.present? %> 
+        <div class="alert alert-success" role="alert">
+          <%= notice %>
+        </div>
+      <% end %>
 
-    <%= yield %>
+      <% if alert.present? %>
+        <div class="alert alert-danger" role="alert">
+          <%= alert %>
+        </div>
+      <% end %>
+
+      <%= yield %>
+    </div>
   </body>
 </html>
